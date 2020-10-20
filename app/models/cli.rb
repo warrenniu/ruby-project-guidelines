@@ -83,6 +83,13 @@ attr_accessor :karma
 
       end
 
+    #   def check_game
+    #     Game.all.each do |saved_game|
+    #         if saved_game.user_id == @@user.id 
+                
+    #   end
+
+
     #====================================  
     #STAGES / PLANETS
     #====================================  
@@ -111,13 +118,13 @@ attr_accessor :karma
             when 4
                 karma -= 2
             end
-          
+           
             choices_2 = { "Kill" => 1,
             "meditate" => 2,
             "run" => 3,
             "help" => 4}
             action_2 = @@prompt.select("A small band of child", choices_2)
-            case action_1
+            case action_2
             when 1
                 karma -= 2
             when 2
@@ -127,9 +134,8 @@ attr_accessor :karma
             when 4
                 karma += 2
             end
+            Game.create(user_id: @@user.id,planet_id: @planet_id,karma: karma)
             binding.pry
-            #Game.create(user_id: @@user.id,planet_id: @planet_id,karma: karma)
-
             
 
 

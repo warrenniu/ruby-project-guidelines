@@ -6,22 +6,27 @@ class Game < ActiveRecord::Base
     # @results = nil
     # @planet = nil
 
-    def show_board
-        self.all.each do |saved_games|
-            
+     def self.show_board
+        self.all.each do |saved_game|
+           userid = user_id
+          name =  User.find_by(userid)
+           puts name
+        end
     end
+
+    
 
 
 
 
     
 
-    def calculate_karma
-        if >= 5
-            @@prompt.say("Jedi",color: :blue)
-        else
-            @@prompt.say("Sith",color: :red)
-        end
+    # def calculate_karma
+    #     if >= 5
+    #         @@prompt.say("Jedi",color: :blue)
+    #     else
+    #         @@prompt.say("Sith",color: :red)
+    #     end
 
 
   
