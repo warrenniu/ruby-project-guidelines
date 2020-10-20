@@ -14,18 +14,14 @@ ActiveRecord::Schema.define(version: 2020_10_19_204019) do
 
   create_table "games", force: :cascade do |t|
     t.integer "planet_id"
+    t.integer "user_id"
+    t.integer "karma"
   end
 
   create_table "planets", force: :cascade do |t|
     t.string "name"
     t.integer "population"
     t.string "terrain"
-  end
-
-  create_table "results", force: :cascade do |t|
-    t.integer "game_id"
-    t.integer "user_id"
-    t.integer "karma"
   end
 
   create_table "users", force: :cascade do |t|

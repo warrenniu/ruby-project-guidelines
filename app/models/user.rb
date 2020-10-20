@@ -1,8 +1,8 @@
 require 'tty-prompt'
 
 class User < ActiveRecord::Base
-    has_many :results
-    has_many :games, through: :results
+    has_many :games
+    has_many :planets, through: :games
     @@prompt = TTY::Prompt.new
 
     def self.create_account
@@ -22,7 +22,6 @@ class User < ActiveRecord::Base
         password = @@prompt.mask("Enter password")
         while self.find_by(password: password) == nil
             password = @@prompt.mask("Incorrect password. Please try again")
-
         end
         self.find_by(username: username, password: password)
     end
