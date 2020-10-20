@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
     def self.create_account
         username = @@prompt.ask("Enter your full name i.e. LukeSkywalker")
-        if username
+        while self.find_by(username: username) 
             username = @@prompt.ask("Username already taken. Please try again")
         end
         password = @@prompt.mask("Create your password")
