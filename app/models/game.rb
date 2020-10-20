@@ -8,8 +8,7 @@ class Game < ActiveRecord::Base
 
      def self.show_board
         self.all.each do |saved_game|
-           userid = user_id
-          name =  User.find_by(userid)
+           saved_game.user.username
            puts name
         end
     end
