@@ -6,6 +6,7 @@ class Cli
 @@user = nil
 @@prompt = TTY::Prompt.new
 
+#AAAAAAAAAAAAAAAAAAAA
 # action = @@prompt.select("What would you like to do?", choices)
 
         def display_menu
