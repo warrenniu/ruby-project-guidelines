@@ -68,8 +68,8 @@ attr_accessor :karma
       def new_game
         system('clear')
         @@prompt.say("Choose where to start your story")
-        choices = { "Tatooine" => 1,
-                    "Alderaan" => 2,
+        choices = { "Tatooine: Episodes I - III" => 1,
+                    "Alderaan: Episodes IV - VI" => 2,
                     "Exit" => 3}
        action = @@prompt.select("Select a planet",choices)
         case action
@@ -170,10 +170,13 @@ attr_accessor :karma
             when 4
                 karma += 2
             end
-            Game.create(user_id: @@user.id,planet_id: @planet_id,karma: karma)
-            binding.pry
-            
+            puts "Your last desperate act was quickly noticed by your assailant and in a flash - you felt a sharp and hot pain through your abdominal, as if the Tatooine sun itself has found a way into your body. \nThe saber has pierced your abdominal."
+            puts "You fall weightless to the ground, succumbing to the pain. You hear the bike roar to life and zoom away, and take a last glance at your killer. \nHood blown over by the wind, your killer was not a man nor a dark figure, but the red devil himself."
 
+            Game.create(user_id: @@user.id,planet_id: @planet_id,karma: karma)
+            # binding.pry
+            
+        self.game_menu
 
 
             
@@ -181,9 +184,11 @@ attr_accessor :karma
 
 
         def alderaan
-            @@prompt.say("Welcome to Tatonnie.\nPopulation: 200,000.\nTerrain: Desert")
-            @planet = Planet.create_Alderaan
-            @planet_id = @planet.id
+            system('clear')
+            @@prompt.say("Welcome to #{Planet.second.name}.\nPopulation: #{Planet.second.population.to_i}.\nTerrain: #{Planet.second.terrain}",color: :green)
+            @planet_id = Planet.second.id
+            karma = 0
+            binding.pry
         end
 
 

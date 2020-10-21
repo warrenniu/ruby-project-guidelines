@@ -5,7 +5,7 @@ require 'pry'
 api_response_one = RestClient.get("https://swapi.dev/api/planets")
 #api_response_two = RestClient.get("https://swapi.dev/api/planets/2")
 tatooine = JSON.parse(api_response_one)
-#alderaan = JSON.parse(api_response_two)
+# alderaan = JSON.parse(api_response_one)
 
 tatooine["results"].each do |category|
     Planet.create(
@@ -14,6 +14,13 @@ tatooine["results"].each do |category|
         terrain: category["terrain"]
     )
 end
+
+# alderaan["results"].each do |category|
+#     Planet.create(
+#         name: category["name"],
+#         population: category["population"],
+#         terrain: category["terrain"]
+#     )
 
 # alderaan.each do |category|
 #     Planet.create(
