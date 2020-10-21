@@ -29,7 +29,25 @@ attr_accessor :karma
                 # binding.pry
                 self.game_menu
             when 3
-                puts "Coming soon..."
+                #when 3
+                awakened_choices = {"Tatooine" => 1, "Alderaan" =>2,"Go back" => 3}
+                awaken_action = @@prompt.select("Select planet to see results", awakened_choices)
+                case awaken_action
+                when 1 
+                    Game.show_tatooine
+                    choice = {"Go back" => 1}
+                    action = @@prompt.select("", choice)
+                    case action
+                    when 1 
+                    self.display_menu
+                    end
+
+                when 2
+                    #Game.show_alderaan
+                when 3
+                    self.display_menu
+                end
+                #end of when 3
             when 4
                 system('exit')
         end
@@ -53,13 +71,11 @@ attr_accessor :karma
             when 1  
                 # @@prompt.say("Light",color: :bright_blue)
                 # @@prompt.say("Dark",color: :red)
-                
                  self.new_game
             when 2
                 puts "coming soon.."
             when 3
-                puts "Coming soon.."
-                # Game.show_board
+               Game.show_tatooine
             when 4
                 system('exit')
             end
@@ -74,6 +90,7 @@ attr_accessor :karma
        action = @@prompt.select("Select a planet",choices)
         case action
         when 1
+            self.check_tatooine
             @@prompt.say("You have chosen Tatooine",color: :yellow)
             self.tatooine
         when 2 
@@ -85,11 +102,33 @@ attr_accessor :karma
 
       end
 
-    #   def check_game
-    #     Game.all.each do |saved_game|
-    #         if saved_game.user_id == @@user.id 
+
+
+ 
+
+
+
+      def check_tatooine
+        Game.all.each do |saved_game|
+            if saved_game.user_id == @@user.id && saved_game.planet_id == Planet.first.id
+                choices = { "Delete and start new game" => 1,
+            "Go back" => 2}
+            action = @@prompt.select("It looks like you already have a game" ,choices)
+            case action
+            when 1
+                saved_game.destroy
+                @@prompt.say("Game deleted")
+                sleep(1.5)
+            when 2
+                self.game_menu
+            end
+        end
+        end
+    end
                 
-    #   end
+
+                
+      
 
 
     #====================================  
@@ -100,18 +139,24 @@ attr_accessor :karma
 
         def tatooine
             system('clear')
-            @@prompt.say("Welcome to #{Planet.first.name}.\nPopulation: #{Planet.first.population.to_i}.\nTerrain: #{Planet.first.terrain}",color: :yellow)
-            @@prompt.say("Episode I: The Chosen One")
-            @@prompt.say("Desolate. Corrupted. Poor. \nThe hero wakes up in a small mining village on a hot, muggy morning. \nLiving a life knowing nothing other than indentured servitude, the hero forces himself to step outside into the sweltering heat.")
-            @@prompt.say("...Blood. The Stench. The Bodies. You couldn't help but put your hand over your mouth in horror. \nAs you scour the village, you suddenly hear a whimper of a voice calling for help. \nYou make your way over to the voice and noticed a woman, fatally injured, sitting on the floor, clenching a sleeping baby")
-            @@prompt.say("'Please', says the woman. 'Take the baby and this note. The balance of the world is in your hands.'\nAs you take the baby and note, the woman reaches back out and begs for you to end her suffering")
+            @@prompt.say("Welcome to #{Planet.first.name}.\nPopulation: #{Planet.first.population.to_i}.\nTerrain: #{Planet.first.terrain}\n",color: :yellow)
+            puts " "
+            sleep(3)
+            @@prompt.say("Episode I: The Chosen One\n")
+            puts " "
+            @@prompt.say("Desolate. Corrupted. Poor. \nThe hero wakes up in a small mining village on a hot, muggy morning. \nLiving a life knowing nothing other than indentured servitude, the hero forces himself to step outside into the sweltering heat.\n")
+            puts " "
+            @@prompt.say("...Blood. The Stench. The Bodies. You couldn't help but put your hand over your mouth in horror. \nAs you scour the village, you suddenly hear a whimper of a voice calling for help. \nYou make your way over to the voice and noticed a woman, fatally injured, sitting on the floor, clenching a sleeping baby\n")
+            puts " "
+            @@prompt.say("'Please', says the woman. 'Take the baby and this note. The balance of the world is in your hands.'\nAs you take the baby and note, the woman reaches back out and begs for you to end her suffering\n")
             @planet_id = Planet.first.id
             karma = 0
+            sleep(8)
 
             
             choices_1 = { "Kill the woman" => 1,
             "Leave the woman without saying a word" => 2,
-            "Decline, and say that you cannot do it" => 3,
+            "Decline, and say that you cannot kill her" => 3,
             "Kill the woman, and take her belongings" => 4}
             action_1 = @@prompt.select("What will you do?", choices_1)
             case action_1
@@ -170,15 +215,16 @@ attr_accessor :karma
             when 4
                 karma += 2
             end
-            puts "Your last desperate act was quickly noticed by your assailant and in a flash - you felt a sharp and hot pain through your abdominal, as if the Tatooine sun itself has found a way into your body. \nThe saber has pierced your abdominal."
-            puts "You fall weightless to the ground, succumbing to the pain. You hear the bike roar to life and zoom away, and take a last glance at your killer. \nHood blown over by the wind, your killer was not a man nor a dark figure, but the red devil himself."
+            system('clear')
+            @@prompt.say("Your last desperate act was quickly noticed by your assailant and in a flash - you felt a sharp and hot pain through your abdominal, as if the Tatooine sun itself has found a way into your body. \nThe saber has pierced your abdominal.")
+            @@prompt.say("You fall weightless to the ground, succumbing to the pain. You hear the bike roar to life and zoom away, and take a last glance at your killer. \nHood blown over by the wind, your killer was not a man nor a dark figure, but the red devil himself.")
+            sleep(5)
 
-            Game.create(user_id: @@user.id,planet_id: @planet_id,karma: karma)
+
+
+            Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @result)
             # binding.pry
-            
-        self.game_menu
-
-
+             
             
         end
 
