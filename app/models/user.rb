@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
     def self.create_account
         username = @@prompt.ask("Enter your full name i.e. LukeSkywalker")
         while self.find_by(username: username) 
-            username = @@prompt.ask("Username already taken. Please try again")
+        username = @@prompt.ask("Username already taken. Please try again. type exit to exit")
+            
         end
         password = @@prompt.mask("Create your password")
         self.create(username: username, password: password)

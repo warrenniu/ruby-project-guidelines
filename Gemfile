@@ -23,3 +23,5 @@ gem 'rest-client' # let you actually make the requests to the URLs
 # to prettify-CLI
 gem 'tty-prompt', '~> 0.22.0'
 gem 'artii', '~> 2.1', '>= 2.1.2'
+gem 'tty-spinner', '~> 0.9.3'
+gem 'terminal-table'
