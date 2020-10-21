@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2020_10_19_204019) do
   create_table "games", force: :cascade do |t|
     t.integer "planet_id"
     t.integer "user_id"
-    t.integer "karma"
+    t.string "karma"
   end
 
   create_table "planets", force: :cascade do |t|

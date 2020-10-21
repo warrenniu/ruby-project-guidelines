@@ -3,7 +3,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
     create_table :games do |t|
       t.integer :planet_id
       t.integer :user_id
-      t.integer :karma
+      t.string :karma
     end
   end
 end

@@ -9,6 +9,7 @@ attr_accessor :karma
 @@prompt = TTY::Prompt.new
 @planet = nil
 @planet_id = nil
+@@title = nil
 
 
 
@@ -151,7 +152,7 @@ attr_accessor :karma
             @@prompt.say("'Please', says the woman. 'Take the baby and this note. The balance of the world is in your hands.'\nAs you take the baby and note, the woman reaches back out and begs for you to end her suffering\n")
             @planet_id = Planet.first.id
             karma = 0
-            sleep(8)
+            sleep(1)
 
             
             choices_1 = { "Kill the woman" => 1,
@@ -161,21 +162,26 @@ attr_accessor :karma
             action_1 = @@prompt.select("What will you do?", choices_1)
             case action_1
             when 1
-                karma += 2
+                karma -= 1 
             when 2
-                karma -= 1
-            when 3
                 karma += 1
+            when 3
+                karma += 2
             when 4
                 karma -= 2
             end
            
             system('clear')
             @@prompt.say("Episode II: The Chase")
+            puts " "
             @@prompt.say("Hot. Tired. Helpless. \nThe hero walks through the endless deserts of Tatooine. 'The Chosen One'. That was all the note had written. \nThe hero holds the baby in his right arm and clenches the note in his left hand, dragging his feet through the sand.")
+            puts " "
             @@prompt.say("Taking your last step before collapsing into the sand, you notice a shadowy figure in the distance, heading your way. \nAs you come to your senses, you suddenly find yourself strapped in the back of a bike with the baby, chased by two sandtroopers and a black cloak figure." )
+            puts " "
             @@prompt.say("With the chase intensifying, the driver is hit by a blast and the bike flips you and the baby into the sand\nAs you attempt to get up, you notice the black figure approaching you, holding a red light saber.")
+            puts " "
             @@prompt.say("Frantically securing the baby, you noticed a blaster laying near you")
+            sleep(1)
 
             choices_2 = { "Point the gun at the baby" => 1,
             "Leave the gun and attempt to run" => 2,
@@ -195,10 +201,15 @@ attr_accessor :karma
 
             system('clear')
             @@prompt.say("Episode III: The Sacrifice")
+            puts " "
             @@prompt.say("Suddenly, your body tightens up. You feel your fingers twitching, and your throat closing up as you're gasping for air. You feel your feet lifted from the ground")
+            puts " "
             @@prompt.say("As the cloaked figure approaches, you recall the woman you encountered earlier in the day, and wondered if her last moments were similar to what you're feeling now")
+            puts " "
             @@prompt.say("As you prepared for your death, you noticed that your savior had somehow secured the baby while your pursuer was focused on you. \nAs you glanced over, you felt the tension in your neck loosen as the dark figure noticed your savior escaping.") 
+            puts " "
             @@prompt.say("You're able to regain full control of your body.")
+            sleep(1)
 
             choices_3 = { "Run away" => 1,
             "Pick up the blaster" => 2,
@@ -218,11 +229,14 @@ attr_accessor :karma
             system('clear')
             @@prompt.say("Your last desperate act was quickly noticed by your assailant and in a flash - you felt a sharp and hot pain through your abdominal, as if the Tatooine sun itself has found a way into your body. \nThe saber has pierced your abdominal.")
             @@prompt.say("You fall weightless to the ground, succumbing to the pain. You hear the bike roar to life and zoom away, and take a last glance at your killer. \nHood blown over by the wind, your killer was not a man nor a dark figure, but the red devil himself.")
-            sleep(5)
+            sleep(1)
+
+            
+            self.calculate_karma(karma, @@title)
+            # binding.pry
 
 
-
-            Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @result)
+            Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @@title)
             # binding.pry
              
             
@@ -235,6 +249,19 @@ attr_accessor :karma
             @planet_id = Planet.second.id
             karma = 0
             binding.pry
+        end
+
+        def calculate_karma(points, title)
+            if points >= 4
+                @@title = "Jedi Master"
+            elsif (0..3) === points
+                @@title = "Jedi"
+            elsif (-3..-1) === points 
+                @@title = "Sith Apprentice"
+            else
+                @@title = "Sith Lord"
+                # binding.pry
+            end
         end
 
 
