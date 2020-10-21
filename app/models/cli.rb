@@ -229,16 +229,39 @@ attr_accessor :karma
             system('clear')
             @@prompt.say("Your last desperate act was quickly noticed by your assailant and in a flash - you felt a sharp and hot pain through your abdominal, as if the Tatooine sun itself has found a way into your body. \nThe saber has pierced your abdominal.")
             @@prompt.say("You fall weightless to the ground, succumbing to the pain. You hear the bike roar to life and zoom away, and take a last glance at your killer. \nHood blown over by the wind, your killer was not a man nor a dark figure, but the red devil himself.")
-            sleep(1)
+            sleep(5)
+            system('clear')
 
+            
+            
+            
+            @@prompt.say("Welcome to #{Planet.fourth.name}.\nPopulation: #{Planet.fourth.population}.\nTerrain: #{Planet.fourth.terrain}\n",color: :bright_blue)
+            puts " "
+            sleep(3)
+            @@prompt.say("10 years later...")
+            puts " "
+            @@prompt.say("Episode I: The Chosen One\n")
+            puts " "
+            @@prompt.say("Desolate. Corrupted. Poor. \nThe hero wakes up in a small mining village on a hot, muggy morning. \nLiving a life knowing nothing other than indentured servitude, the hero forces himself to step outside into the sweltering heat.\n")
+            puts " "
+            @@prompt.say("...Blood. The Stench. The Bodies. You couldn't help but put your hand over your mouth in horror. \nAs you scour the village, you suddenly hear a whimper of a voice calling for help. \nYou make your way over to the voice and noticed a woman, fatally injured, sitting on the floor, clenching a sleeping baby\n")
+            puts " "
+            @@prompt.say("'Please', says the woman. 'Take the baby and this note. The balance of the world is in your hands.'\nAs you take the baby and note, the woman reaches back out and begs for you to end her suffering\n")
+            
+            
             
             self.calculate_karma(karma, @@title)
             # binding.pry
 
+            @@prompt.say("Congratulations! You've attained the title, #{@@title}. Thank you for playing!")
 
             Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @@title)
             # binding.pry
+            sleep(5)
+
+            self.game_menu
              
+
             
         end
 
