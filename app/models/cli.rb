@@ -18,6 +18,10 @@ class Cli
 @@awaken = @@arti.asciify('The Awaken')
 @@spinner = TTY::Spinner.new("[:spinner] Now arriving....", format: :spin_4)
 @@spinner_one = TTY::Spinner.new(":spinner] Performing action...", format: :spin_4)
+@@pastel = Pastel.new
+@@jedi_pastel = @@pastel.blue.bold("Jedi")
+@@sith_pastel = @@pastel.red.bold("Sith")
+
 #end of animation variables
 
     #====================================  
@@ -27,6 +31,7 @@ class Cli
 
         def display_menu
             system('clear')
+            sleep(5)
             @@prompt.say(@@starwars,color: :yellow)
             sleep(3)
             @@prompt.say(@@awaken,color: :yellow)
@@ -572,13 +577,9 @@ class Cli
         end
         def calculate_karma(points, title)
             if points >= 4
-                @@title = "Jedi Master"
-            elsif (0..3) === points
-                @@title = "Jedi"
-            elsif (-3..-1) === points 
-                @@title = "Sith Apprentice"
+                @@title = @@jedi_pastel
             else
-                @@title = "Sith Lord"
+                @@title = @@sith_pastel
             end
         end
 

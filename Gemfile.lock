@@ -86,6 +86,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   artii (~> 2.1, >= 2.1.2)
+  pastel
   pry
   rake
   require_all
