@@ -1,29 +1,31 @@
 require 'tty-prompt'
 require 'tty-spinner'
 require 'pry'
+
 class Cli
 
-
-
+#instance/class variables
 @@user = nil
 @@prompt = TTY::Prompt.new
-
-@@arti = Artii::Base.new :font => 'slant'
 @planet = nil
 @planet_id = nil
 @@title = nil
+#end of instance/class variables
 
 #animation variables
+@@arti = Artii::Base.new :font => 'slant'
 @@starwars = @@arti.asciify('Star Wars :')
 @@awaken = @@arti.asciify('The Awaken')
 @@spinner = TTY::Spinner.new("[:spinner] Now arriving....", format: :spin_4)
+@@spinner_one = TTY::Spinner.new(":spinner] Performing action...", format: :spin_4)
 #end of animation variables
 
-      
+    #====================================  
+    #DISPLAY MENU
+    #==================================== 
 
 
         def display_menu
-            # Displays the options to the user!
             system('clear')
             @@prompt.say(@@starwars,color: :yellow)
             sleep(3)
@@ -40,10 +42,8 @@ class Cli
                 self.game_menu
             when 2
                 @@user = User.login
-                # binding.pry
                 self.game_menu
             when 3
-                #when 3
                 awakened_choices = {"Tatooine" => 1, "Alderaan" =>2, "Show all results" => 3,"Go back" => 4}
                 awaken_action = @@prompt.select("Select planet to see results", awakened_choices)
                 case awaken_action
@@ -65,20 +65,19 @@ class Cli
                     end
                 when 3
                     Game.show_all_results
-                        choice = {"Go back" => 1}
-                        action = @@prompt.select("", choice)
-                        case action
-                        when 1 
-                        self.display_menu
-                         end
+                    choice = {"Go back" => 1}
+                    action = @@prompt.select("", choice)
+                    case action
+                    when 1 
+                    self.display_menu
+                    end
                 when 4
                     self.display_menu
                 end
-                #end of when 3
-            when 4
+              when 4
                 system('exit')
+            end
         end
-    end
 
     #====================================  
     #GAME MENU
@@ -86,20 +85,56 @@ class Cli
 
 
         def game_menu
-            # Displays the options to the user!
             system('clear')
             choices = { "New Game" => 1,
-                    "Go back" => 2}
-                    @@prompt.say("Welcome, Hero")
+                    "The Awakened" => 2,
+                    "Go back" => 3}
+            @@prompt.say("Welcome, Hero")
             action = @@prompt.select("Awaken the Force", choices)
             case action
             when 1  
-             
-                 self.new_game
+                self.new_game
             when 2
+                awakened_choices = {"Tatooine" => 1, "Alderaan" =>2, "Show all results" => 3,"Go back" => 4}
+                awaken_action = @@prompt.select("Select planet to see results", awakened_choices)
+                case awaken_action
+                when 1 
+                    Game.show_tatooine
+                    choice = {"Go back" => 1}
+                    action = @@prompt.select("", choice)
+                    case action
+                    when 1 
+                    self.game_menu
+                    end
+                when 2
+                    Game.show_alderaan
+                    choice = {"Go back" => 1}
+                    action = @@prompt.select("", choice)
+                    case action
+                    when 1 
+                    self.game_menu
+                    end
+                when 3
+                    Game.show_all_results
+                    choice = {"Go back" => 1}
+                    action = @@prompt.select("", choice)
+                    case action
+                    when 1 
+                    self.game_menu
+                    end
+                when 4
+                    self.game_menu
+                end
+            when 3
                 self.display_menu
+
             end
         end
+
+    #====================================  
+    #NEW GAME
+    #==================================== 
+
 
       def new_game
         system('clear')
@@ -107,13 +142,14 @@ class Cli
         choices = { "Tatooine" => 1,
                     "Alderaan" => 2,
                     "Exit" => 3}
-       action = @@prompt.select("Select a planet",choices)
+        action = @@prompt.select("Select a planet",choices)
         case action
         when 1
             self.check_tatooine
             @@prompt.say("You have chosen Tatooine",color: :yellow)
             self.tatooine
         when 2 
+            self.check_alderaan
             @@prompt.say("You have chosen Alderaan",color: :green)
             self.alderaan
         when 3
@@ -121,30 +157,6 @@ class Cli
         end
 
       end
-
-
-
- 
-
-
-
-      def check_tatooine
-        Game.all.each do |saved_game|
-            if saved_game.user_id == @@user.id && saved_game.planet_id == Planet.first.id
-                choices = { "Delete and start new game" => 1,
-            "Go back" => 2}
-            action = @@prompt.select("It looks like you already have a game" ,choices)
-            case action
-            when 1
-                saved_game.destroy
-                @@prompt.say("Game deleted")
-                sleep(1.5)
-            when 2
-                self.game_menu
-            end
-        end
-        end
-    end
                 
 
                 
@@ -156,18 +168,22 @@ class Cli
     #====================================  
 
 
+        #====================================  
+        #TATOOINE
+        #==================================== 
 
         def tatooine
             @planet_id = Planet.first.id
             karma = 0
 
             system('clear')
-            @@spinner.auto_spin
-            sleep(5)
-            @@spinner.stop
-            system('clear')
-            sleep(0.5)
+            self.now_arriving_spinner
+
             @@prompt.say("Welcome to #{Planet.first.name}.\nPopulation: #{Planet.first.population.to_i}.\nTerrain: #{Planet.first.terrain}\n",color: :yellow)
+            
+            #====================================  
+            #TATOOINE - EPISODE I
+            #==================================== 
             
             sleep(3)
             @@prompt.say("Episode I: The Chosen One\n\n")
@@ -192,6 +208,12 @@ class Cli
             when 4
                 karma -= 2
             end
+
+            self.performing_action_spinner
+
+            #====================================  
+            #TATOOINE - EPISODE II
+            #==================================== 
            
             system('clear')
             @@prompt.say("Episode II: The Chase\n\n")
@@ -218,6 +240,12 @@ class Cli
                 karma += 2
             end
 
+            self.performing_action_spinner
+
+            #====================================  
+            #TATOOINE - EPISODE III
+            #==================================== 
+
             system('clear')
             @@prompt.say("Episode III: The Sacrifice\n\n")
             @@prompt.say("Suddenly, your body tightens up. You feel your fingers twitching, and your throat closing up as you're gasping for air. You feel your feet lifted from the ground.\n\n")
@@ -231,7 +259,7 @@ class Cli
             "Scream for help" => 3,
             "Tackle the dark figure" => 4}
             action_3 = @@prompt.select("What will you do?", choices_3)
-            case action_2
+            case action_3
             when 1
                 karma -= 2
             when 2
@@ -241,15 +269,21 @@ class Cli
             when 4
                 karma += 2
             end
+
+            self.performing_action_spinner
+
             system('clear')
+
             @@prompt.say("Your last desperate act was quickly noticed by your assailant and in a flash - you felt a sharp and hot pain through your abdominal, as if the Tatooine sun itself has found a way into your body. \nThe saber has pierced your abdominal.\n\n")
             @@prompt.say("You fall weightless to the ground, succumbing to the pain. You hear the bike roar to life and zoom away, and take a last glance at your killer. \nHood blown over by the wind, your killer was not a man nor a dark figure, but the red devil himself.\n\n")
             sleep(10)
             system('clear')
 
-            @@spinner.auto_spin
-            sleep(5)
-            @@spinner.stop
+            self.now_arriving_spinner
+
+            #====================================  
+            #HOTH - EPISODE IV
+            #==================================== 
 
             @@prompt.say("Welcome to #{Planet.fourth.name}.\nPopulation: #{Planet.fourth.population}.\nTerrain: #{Planet.fourth.terrain}\n",color: :bright_blue)
 
@@ -280,6 +314,12 @@ class Cli
                 karma += 2
             end
 
+            self.performing_action_spinner
+
+            #====================================  
+            #HOTH - EPISODE V
+            #==================================== 
+
             system('clear')
             @@prompt.say("Episode V: The Second Encounter\n\n")
             @@prompt.say("You follow your master back to your camp, dragging your dinner behind you. As you're recounting your kill, your master suddenly puts his arm out, motioning you to stay low and stay quiet.\n\n")
@@ -295,7 +335,7 @@ class Cli
             "Run towards your master" => 3,
             "Yell out in warning" => 4}
             action_5 = @@prompt.select("What will you do?", choices_5)
-            case action_2
+            case action_5
             when 1
                 karma += 2
             when 2
@@ -305,6 +345,12 @@ class Cli
             when 4
                 karma += 1
             end
+
+            self.performing_action_spinner
+
+            #====================================  
+            #HOTH - EPISODE VI
+            #==================================== 
 
             system('clear')
             @@prompt.say("Episode VI: Darth Maul\n\n")
@@ -321,7 +367,7 @@ class Cli
             "Pick up snow and throw it at him" => 3,
             "Attempt to run away" => 4}
             action_6 = @@prompt.select("What will you do?", choices_6)
-            case action_2
+            case action_6
             when 1
                 karma += 2
             when 2
@@ -332,15 +378,19 @@ class Cli
                 karma -= 2
             end
 
+            self.performing_action_spinner
+
             system('clear')
             @@prompt.say("As you make make your move, you feel your body tighten up and your arms locked to your side, You feel your throat closing as you're suddenly gasping for air. Your body being lifted into the air")
             @@prompt.say("The black figure stands before you, watching you struggle. When you feel like you couldn't take another breath, the assailant hits you hard behind your next, knocking you unconscious.")
             sleep(10)
             system('clear')
 
-            @@spinner.auto_spin
-            sleep(5)
-            @@spinner.stop
+           self.now_arriving_spinner
+
+            #====================================  
+            #CORUSCANT - EPISODE VII
+            #==================================== 
 
             @@prompt.say("Welcome to #{Planet.second_to_last.name}.\nPopulation: #{Planet.second_to_last.population}.\nTerrain: #{Planet.second_to_last.terrain}\n",color: :red)
 
@@ -360,7 +410,7 @@ class Cli
             "Charge up your lightning but don't use it" => 3,
             "Use the Force and choke them all to death" => 4}
             action_7 = @@prompt.select("What will you do?", choices_7)
-            case action_2
+            case action_7
             when 1
                 karma += 2
             when 2
@@ -370,36 +420,43 @@ class Cli
             when 4
                 karma -= 2
             end
+            self.performing_action_spinner
             
             
+            #=========================================  
+            #TATOOINE - END OF GAME KARMA CALCULATION
+            #========================================= 
             
             
             self.calculate_karma(karma, @@title)
-            # binding.pry
             system('clear')
             @@prompt.say("Congratulations! You've attained the title, #{@@title}. Thank you for playing!")
 
             Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @@title)
-            # binding.pry
             sleep(5)
 
             self.game_menu
              
 
             
-        end
+        end #END OF TATOOINE
 
+        #====================================  
+        #ALDERAAN 
+        #==================================== 
 
         def alderaan
             karma = 0
             @planet_id = Planet.second.id
 
             system('clear')
-            @@spinner.auto_spin
-            sleep(5)
-            @@spinner.stop
-            system('clear')
-            sleep(0.5)
+
+            self.now_arriving_spinner
+
+            #====================================  
+            #ALDERAAN - EPISODE I
+            #==================================== 
+
             @@prompt.say("Welcome to #{Planet.second.name}.\nPopulation: #{Planet.second.population.to_i}.\nTerrain: #{Planet.second.terrain}",color: :green)
             sleep(3)
             @@prompt.say("Episode I: The Chosen One\n\n")
@@ -423,24 +480,85 @@ class Cli
                 karma -= 2
             end
 
+            #=========================================  
+            #ALDERAAN - END OF GAME KARMA CALCULATION
+            #========================================= 
+
             self.calculate_karma(karma, @@title)
-            # binding.pry
             system('clear')
             @@prompt.say("Congratulations! You've attained the title, #{@@title}. Thank you for playing!")
 
             Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @@title)
-            # binding.pry
             sleep(5)
 
             self.game_menu
 
         end
 
+        
+        def check_tatooine
+            Game.all.each do |saved_game|
+                if saved_game.user_id == @@user.id && saved_game.planet_id == Planet.first.id
+                    choices = { "Delete and start new game" => 1,
+                "Go back" => 2}
+                action = @@prompt.select("It looks like you already have a game" ,choices)
+                case action
+                when 1
+                    saved_game.destroy
+                    @@prompt.say("Game deleted")
+                    sleep(1.5)
+                when 2
+                    self.game_menu
+                end
+              end
+            end
+          end
+
+          def check_alderaan
+            Game.all.each do |saved_game|
+                if saved_game.user_id == @@user.id && saved_game.planet_id == Planet.second.id
+                    choices = { "Delete and start new game" => 1,
+                "Go back" => 2}
+                action = @@prompt.select("It looks like you already have a game" ,choices)
+                case action
+                when 1
+                    saved_game.destroy
+                    @@prompt.say("Game deleted")
+                    sleep(1.5)
+                when 2
+                    self.game_menu
+                end
+              end
+            end
+          end
+
+        #=========================================  
+        #SPINNER METHODS
+        #========================================= 
+        
 
 
+        def now_arriving_spinner
+            @@spinner.auto_spin
+            sleep(5)
+            @@spinner.stop
+            system('clear')
+            sleep(0.5)
+        end
 
+        def performing_action_spinner
+            @@spinner_one.auto_spin
+            sleep(3)
+            @@spinner_one.stop
+            @@prompt.say("Action Performed")
+            sleep(1)
+        end
 
+        #=========================================  
+        #CALCULATE KARMA METHODS
+        #========================================= 
 
+        
         def calculate_karma(points, title)
             if points >= 4
                 @@title = "Jedi Master"
@@ -450,7 +568,17 @@ class Cli
                 @@title = "Sith Apprentice"
             else
                 @@title = "Sith Lord"
-                # binding.pry
+            end
+        end
+        def calculate_karma(points, title)
+            if points >= 4
+                @@title = "Jedi Master"
+            elsif (0..3) === points
+                @@title = "Jedi"
+            elsif (-3..-1) === points 
+                @@title = "Sith Apprentice"
+            else
+                @@title = "Sith Lord"
             end
         end
 
@@ -459,6 +587,6 @@ class Cli
 
 
 
-    end #Cli class
+    end #End of Cli class
 
   

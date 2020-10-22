@@ -5,4 +5,3 @@ cli = Cli.new
 
 cli.display_menu
 
-# binding.pry
