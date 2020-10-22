@@ -15,21 +15,6 @@ tatooine["results"].each do |category|
     )
 end
 
-# alderaan["results"].each do |category|
-#     Planet.create(
-#         name: category["name"],
-#         population: category["population"],
-#         terrain: category["terrain"]
-#     )
-
-# alderaan.each do |category|
-#     Planet.create(
-#         name: category["name"],
-#         population: category["population"]
-#         terrain: category["terrain"]
-#     )
-# end
-
 
 
 
