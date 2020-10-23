@@ -5,12 +5,6 @@ class Game < ActiveRecord::Base
     belongs_to :user
 
     @@prompt = TTY::Prompt.new
-    @@table 
-
-
-    # @username = nil
-    # @results = nil
-    # @planet = nil
 
 
     def self.show_tatooine
@@ -41,6 +35,20 @@ class Game < ActiveRecord::Base
         puts table
     end    
 
+    def self.show_naboo
+        system('clear')
+        rows = []
+        @@prompt.say("Displaying results for #{Planet.third_to_last.name}\n",color: :green)
+        self.sort_games_by_user_id.each do |game|
+            if game.planet_id == 8
+                rows << [game.user.username,game.karma]
+            end     
+        end   
+        table = Terminal::Table.new :headings => ["Coming Soon.."],:rows => rows
+        puts table
+    end
+
+
     def self.show_all_results
         system('clear')
         rows = []
@@ -51,9 +59,12 @@ class Game < ActiveRecord::Base
             table = Terminal::Table.new :headings => ["Username","Title","Planet"],:rows => rows
                 puts table     
         end
+        
 
+    
     def self.sort_games_by_user_id
         self.all.sort_by {|saved_game| saved_game.user_id}
+
     end
 
         

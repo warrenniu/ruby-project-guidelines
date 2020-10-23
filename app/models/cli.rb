@@ -24,6 +24,9 @@ class Cli
 
 #end of animation variables
 
+      
+
+
     #====================================  
     #DISPLAY MENU
     #==================================== 
@@ -31,10 +34,10 @@ class Cli
 
         def display_menu
             system('clear')
-            sleep(2)
+            sleep(1)
             @@prompt.say(@@starwars,color: :yellow)
             puts ""
-            sleep(3)
+            sleep(2)
             @@prompt.say(@@awaken,color: :yellow)
             
             choices = { "Create an Account" => 1,
@@ -50,7 +53,7 @@ class Cli
                 @@user = User.login
                 self.game_menu
             when 3
-                awakened_choices = {"Tatooine" => 1, "Alderaan" =>2, "Show all results" => 3,"Go back" => 4}
+                awakened_choices = {"Tatooine" => 1, "Alderaan" =>2, "Naboo"=>3,"Show all results" => 4,"Go back" => 5}
                 awaken_action = @@prompt.select("Select planet to see results", awakened_choices)
                 case awaken_action
                 when 1 
@@ -70,7 +73,7 @@ class Cli
                     self.display_menu
                     end
                 when 3
-                    Game.show_all_results
+                    Game.show_naboo
                     choice = {"Go back" => 1}
                     action = @@prompt.select("", choice)
                     case action
@@ -78,6 +81,14 @@ class Cli
                     self.display_menu
                     end
                 when 4
+                    Game.show_all_results
+                    choice = {"Go back" => 1}
+                    action = @@prompt.select("", choice)
+                    case action
+                    when 1 
+                    self.display_menu
+                    end
+                when 5
                     self.display_menu
                 end
               when 4
@@ -94,14 +105,15 @@ class Cli
             system('clear')
             choices = { "New Game" => 1,
                     "The Awakened" => 2,
-                    "Go back" => 3}
+                    "Delete Account" => 3,
+                    "Go back" => 4}
             @@prompt.say("Welcome, Hero")
             action = @@prompt.select("Awaken the Force", choices)
             case action
             when 1  
                 self.new_game
             when 2
-                awakened_choices = {"Tatooine" => 1, "Alderaan" =>2, "Show all results" => 3,"Go back" => 4}
+                awakened_choices = {"Tatooine" => 1, "Alderaan" =>2, "Naboo" => 3, "Show all results" => 4,"Go back" => 5}
                 awaken_action = @@prompt.select("Select planet to see results", awakened_choices)
                 case awaken_action
                 when 1 
@@ -121,7 +133,7 @@ class Cli
                     self.game_menu
                     end
                 when 3
-                    Game.show_all_results
+                    Game.show_naboo
                     choice = {"Go back" => 1}
                     action = @@prompt.select("", choice)
                     case action
@@ -129,9 +141,27 @@ class Cli
                     self.game_menu
                     end
                 when 4
+                    Game.show_all_results
+                    choice = {"Go back" => 1}
+                    action = @@prompt.select("", choice)
+                    case action
+                    when 1 
+                    self.game_menu
+                    end
+                when 5
                     self.game_menu
                 end
             when 3
+                choice = {"Yes" => 1, "No" => 2}
+                action = @@prompt.select("Are you sure you want to delete your account?",choice)
+                case action
+                when 1
+                    User.delete_account(@@user)
+                    self.display_menu
+                when 2 
+                    self.game_menu
+                end
+            when 4
                 self.display_menu
 
             end
@@ -140,14 +170,15 @@ class Cli
     #====================================  
     #NEW GAME
     #==================================== 
-
+        
 
       def new_game
         system('clear')
         @@prompt.say("Choose where to start your story")
         choices = { "Tatooine" => 1,
                     "Alderaan" => 2,
-                    "Exit" => 3}
+                    "Naboo" => 3,
+                    "Exit" => 4}
         action = @@prompt.select("Select a planet",choices)
         case action
         when 1
@@ -158,7 +189,15 @@ class Cli
             self.check_alderaan
             @@prompt.say("You have chosen Alderaan",color: :green)
             self.alderaan
-        when 3
+        when 3 
+            @@prompt.say("Coming soon...",color: :green)
+            choices = {"go back" => 1}
+            action = @@prompt.select("Go back",choices)
+            case action
+            when 1
+                self.game_menu
+            end
+        when 4
             system('exit')
         end
 
@@ -604,19 +643,9 @@ class Cli
         #========================================= 
 
         
+        
         def calculate_karma(points, title)
-            if points >= 4
-                @@title = "Jedi Master"
-            elsif (0..3) === points
-                @@title = "Jedi"
-            elsif (-3..-1) === points 
-                @@title = "Sith Apprentice"
-            else
-                @@title = "Sith Lord"
-            end
-        end
-        def calculate_karma(points, title)
-            if points >= 4
+            if points >= 0
                 @@title = @@jedi_pastel
             else
                 @@title = @@sith_pastel
