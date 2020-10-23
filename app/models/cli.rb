@@ -31,8 +31,9 @@ class Cli
 
         def display_menu
             system('clear')
-            sleep(5)
+            sleep(2)
             @@prompt.say(@@starwars,color: :yellow)
+            puts ""
             sleep(3)
             @@prompt.say(@@awaken,color: :yellow)
             
@@ -163,8 +164,6 @@ class Cli
 
       end
                 
-
-                
       
 
 
@@ -182,20 +181,27 @@ class Cli
             karma = 0
 
             system('clear')
+            @@prompt.say("A long time ago, in a galaxy far, far away...\n\n", color: :bright_blue)
+            sleep(2)
+            @@prompt.say("The Empire detects a disruption in the Force, leading them to the planet, Tatooine.\nThe Empire sends one of their Sith Apprentice to investigate the disturbance...\n\n", color: :yellow)
+            @@prompt.keypress("Press space or enter to continue", keys: [:space, :return])
+            system('clear')
             self.now_arriving_spinner
 
-            @@prompt.say("Welcome to #{Planet.first.name}.\nPopulation: #{Planet.first.population.to_i}.\nTerrain: #{Planet.first.terrain}\n",color: :yellow)
+
+            @@prompt.say("Welcome to #{Planet.first.name}.\nPopulation: #{Planet.first.population.to_i}.\nTerrain: #{Planet.first.terrain}\n\n",color: :yellow)
             
             #====================================  
             #TATOOINE - EPISODE I
             #==================================== 
             
             sleep(3)
-            @@prompt.say("Episode I: The Chosen One\n\n")
+            @@prompt.say("Episode I: The Chosen One\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("Desolate. Corrupted. Poor. \nThe hero wakes up in a small mining village on a hot, muggy morning. \nLiving a life knowing nothing other than indentured servitude, the hero forces himself to step outside into the sweltering heat.\n\n")
             @@prompt.say("...The Blood. The Stench. The Bodies. You couldn't help but put your hand over your mouth in horror. \nAs you scour the village, you suddenly hear a whimper of a voice calling for help. \nYou make your way over to the voice and noticed a woman, fatally injured, sitting on the floor, clenching a sleeping baby\n\n")
             @@prompt.say("'Please', says the woman. 'Take the baby and this note. The balance of the world is in your hands.'\nAs you take the baby and note, the woman reaches back out and begs for you to end her suffering\n\n")
-            sleep(5)
+            sleep(6)
 
             
             choices_1 = { "Kill the woman" => 1,
@@ -221,8 +227,8 @@ class Cli
             #==================================== 
            
             system('clear')
-            @@prompt.say("Episode II: The Chase\n\n")
-           
+            @@prompt.say("Episode II: The Chase\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("Hot. Tired. Helpless. \nThe hero walks through the endless deserts of Tatooine. 'The Chosen One'. That was all the note had written. \nThe hero holds the baby in his right arm and clenches the note in his left hand, dragging his feet through the sand.\n\n")
             @@prompt.say("Taking your last step before collapsing into the sand, you notice a shadowy figure in the distance, heading your way. \nAs you come to your senses, you suddenly find yourself strapped in the back of a speeder bike with the baby, chased by two sandtroopers and a black cloak figure.\n\n" )
             @@prompt.say("With the chase intensifying, the driver is hit by a blast and the bike flips you and the baby into the sand\nAs you attempt to get up, you notice the black figure approaching you, holding a red light saber.\n\n")
@@ -252,7 +258,8 @@ class Cli
             #==================================== 
 
             system('clear')
-            @@prompt.say("Episode III: The Sacrifice\n\n")
+            @@prompt.say("Episode III: The Sacrifice\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("Suddenly, your body tightens up. You feel your fingers twitching, and your throat closing up as you're gasping for air. You feel your feet lifted from the ground.\n\n")
             @@prompt.say("As the cloaked figure approaches, you recall the woman you encountered earlier in the day, and wondered if her last moments were similar to what you're feeling now.\n\n")
             @@prompt.say("As you prepare for your death, you notice that your savior had somehow secured the baby while your pursuer was focused on you. \nAs you glance over, you felt the tension in your neck loosen as the dark figure notices your savior escaping.\n\n") 
@@ -281,7 +288,7 @@ class Cli
 
             @@prompt.say("Your last desperate act was quickly noticed by your assailant and in a flash - you felt a sharp and hot pain through your abdominal, as if the Tatooine sun itself has found a way into your body. \nThe saber has pierced your abdominal.\n\n")
             @@prompt.say("You fall weightless to the ground, succumbing to the pain. You hear the bike roar to life and zoom away, and take a last glance at your killer. \nHood blown over by the wind, your killer was not a man nor a dark figure, but the red devil himself.\n\n")
-            sleep(10)
+            @@prompt.keypress("Press space or enter to continue", keys: [:space, :return])
             system('clear')
 
             self.now_arriving_spinner
@@ -296,7 +303,8 @@ class Cli
             @@prompt.say("15 years later...\n\n")
             sleep(3)
             
-            @@prompt.say("Episode IV: The First Test\n\n")
+            @@prompt.say("Episode IV: The First Test\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("I believe you're ready\n\n")
             @@prompt.say("The master takes the boy across the frozen tundra of Hoth to a small clearing. As they crept towards the edge of the area, the boy sees a wild boar eating its dinner.\n\n'Remember what I taught you', says your master.'\n\n") 
             @@prompt.say("You close your eyes and take a deep breath. The warmth starts creeping up within you, soon reaching a boiling point.\nYou focus the energy into your hand as you lift it towards the animal. You open your eyes and release the energy towards the boar\n\n")
@@ -326,7 +334,8 @@ class Cli
             #==================================== 
 
             system('clear')
-            @@prompt.say("Episode V: The Second Encounter\n\n")
+            @@prompt.say("Episode V: The Second Encounter\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("You follow your master back to your camp, dragging your dinner behind you. As you're recounting your kill, your master suddenly puts his arm out, motioning you to stay low and stay quiet.\n\n")
             @@prompt.say("Stormtroopers. At least 20 of them, rummaging through the camp. You and your master slowly approach the camp, getting a closer look at the scene.\n\n")
             @@prompt.say("A branch snaps below your feet. Your heart drops and you felt your master tense up.\n\nThe stormtroopers look your way, and suddenly you're finding cover from a shower of blasters that were miraculously missing you\n\n")
@@ -358,7 +367,8 @@ class Cli
             #==================================== 
 
             system('clear')
-            @@prompt.say("Episode VI: Darth Maul\n\n")
+            @@prompt.say("Episode VI: Darth Maul\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("You blink, and it's over. What seemed like an art piece just a few seconds ago had evaporated\n\n")
             @@prompt.say("The assailant struck a clean bow. The green lightsaber falls onto the snowy terrain, and your master coughs up droplets of blood. The assailant pulls his lightsaber out of your master's body and his lifeless body falls into the snow\n\n")
             @@prompt.say("You freeze. The tundra of Hoth doesn't feel cold anymore. The memories of your master starts flowing through your mind. The only person you've ever known in your life, gone.\n\n")
@@ -388,7 +398,7 @@ class Cli
             system('clear')
             @@prompt.say("As you make make your move, you feel your body tighten up and your arms locked to your side, You feel your throat closing as you're suddenly gasping for air. Your body being lifted into the air")
             @@prompt.say("The black figure stands before you, watching you struggle. When you feel like you couldn't take another breath, the assailant hits you hard behind your next, knocking you unconscious.")
-            sleep(10)
+            @@prompt.keypress("Press space or enter to continue", keys: [:space, :return])
             system('clear')
 
            self.now_arriving_spinner
@@ -397,20 +407,21 @@ class Cli
             #CORUSCANT - EPISODE VII
             #==================================== 
 
-            @@prompt.say("Welcome to #{Planet.second_to_last.name}.\nPopulation: #{Planet.second_to_last.population}.\nTerrain: #{Planet.second_to_last.terrain}\n",color: :red)
+            @@prompt.say("Welcome to #{Planet.second_to_last.name}.\nPopulation: #{Planet.second_to_last.population}.\nTerrain: #{Planet.second_to_last.terrain}\n\n",color: :red)
 
             sleep(3)
             @@prompt.say("5 years later...\n\n")
             sleep(3)
             
-            @@prompt.say("Episode VII: A Sea of Flames\n\n")
+            @@prompt.say("Episode VII: A Sea of Flames\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("Fire. A sea of flames as far as the eyes can see.\n\n")
             @@prompt.say("Coruscant is burning. Skyscrapers that once stood tall are falling one by one. Screams from civilians and soldiers fighting can be heard from far below. The Sith is descending towards the Jedi Temple.'\n\n") 
             @@prompt.say("As you make your way towards the Temple, standing next to your lord, Darth Maul, you feel a tingling sensation throughout your body.\nThe Force has enveloped your body, but the feeling is different than it was 5 years ago when you first learned to harness the power.\n\n")
-            @@prompt.say("Your ship docks on a landing pad at the Temple as you and your comrades disembark the ship. You're met with a handful of Jedi putting up a resistance and the Sith soon engages.\n\n")
+            @@prompt.say("Your ship docks on a landing pad at the Temple as you and your comrade disembark the ship. You're met with a handful of Jedi putting up a resistance and Darth Maul soon engages. You also notice civilians in the area\n\n")
             sleep(5)
 
-            choices_7 = { "Do nothing and stand in the back" => 1,
+            choices_7 = { "Save the civilians" => 1,
             "Take out your lightsaber and start engaging the Jedi" => 2,
             "Charge up your lightning but don't use it" => 3,
             "Use the Force and choke them all to death" => 4}
@@ -423,11 +434,33 @@ class Cli
             when 3
                 karma += 1
             when 4
-                karma -= 2
+                karma = -1
             end
             self.performing_action_spinner
+
+            if karma > 0
+
+            #=======================================  
+            #CORUSCANT - EPISODE VIII (JEDI ENDING)
+            #======================================= 
+            system('clear')
+            @@prompt.say("Questions start filling your head as you approach the Jedi Council. You begin questioning the methods that the Dark side has been teaching you these past 5 years\n\n")
+            @@prompt.say("As you reach the council room, the Jedi Masters approach you and Darth Maul. You begin to start feeling remorse, and flashbacks of your training with your old Jedi Master start filling your thoughts'\n\n") 
+            @@prompt.say("As Darth Maul unsheathes his red lightsaber, you remember the moment he murdered your master. You build up the Light Force in your body, unleash yourself towards Darth Maul and push him out the window - fulfilling your prophecy of bringing balance to the Force.\n\n")
+           
+            @@prompt.keypress("Press space or enter to continue", keys: [:space, :return])
+
+            #=======================================  
+            #CORUSCANT - EPISODE VIII (SITH ENDING)
+            #======================================= 
+            else
+                system('clear')
+                @@prompt.say("You march into the council room with Darth Maul and are met with the Jedi Masters. Battle ensues, and you quickly gain the upperhand from the power & hatred you have harnessed over the past 5 years\n\n")
+                @@prompt.say("The Jedi Masters fall one by one at the hands of you and Darth Maul, and suddenly the council room falls quiet as the invasion is completely.\n\nWith blood on your hands, you crave for more bloodsheet and await the day you can kill your Master.\n\n")
             
-            
+                @@prompt.keypress("Press space or enter to continue", keys: [:space, :return])
+
+            end
             #=========================================  
             #TATOOINE - END OF GAME KARMA CALCULATION
             #========================================= 
@@ -435,7 +468,7 @@ class Cli
             
             self.calculate_karma(karma, @@title)
             system('clear')
-            @@prompt.say("Congratulations! You've attained the title, #{@@title}. Thank you for playing!")
+            @@prompt.say("Congratulations! You've attained the title: #{@@title}. Thank you for playing!")
 
             Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @@title)
             sleep(5)
@@ -455,16 +488,23 @@ class Cli
             @planet_id = Planet.second.id
 
             system('clear')
-
+            sleep(2)
+            @@prompt.say("A long time ago, in a galaxy far, far away...\n\n", color: :bright_blue)
+            sleep(2)
+            @@prompt.say("The Empire detects a disruption in the Force, leading them to the planet, Tatooine.\nThe Empire sends one of their Sith Apprentice to investigate the disturbance...", color: :yellow)
+            # sleep(6)
+            @@prompt.keypress("Press space or enter to continue", keys: [:space, :return])
+            system('clear')
             self.now_arriving_spinner
 
             #====================================  
             #ALDERAAN - EPISODE I
             #==================================== 
 
-            @@prompt.say("Welcome to #{Planet.second.name}.\nPopulation: #{Planet.second.population.to_i}.\nTerrain: #{Planet.second.terrain}",color: :green)
+            @@prompt.say("Welcome to #{Planet.second.name}.\nPopulation: #{Planet.second.population.to_i}.\nTerrain: #{Planet.second.terrain}\n\n",color: :green)
             sleep(3)
-            @@prompt.say("Episode I: The Chosen One\n\n")
+            @@prompt.say("Episode I: The Chosen One\n\n", color: :yellow)
+            sleep(2)
             @@prompt.say("Desolate. Corrupted. Poor. \nThe hero wakes up in a small mining village on a hot, muggy morning. \nLiving a life knowing nothing other than indentured servitude, the hero forces himself to step outside into the sweltering heat.\n\n")
             @@prompt.say("...Blood. The Stench. The Bodies. You couldn't help but put your hand over your mouth in horror. \nAs you scour the village, you suddenly hear a whimper of a voice calling for help. \nYou make your way over to the voice and noticed a woman, fatally injured, sitting on the floor, clenching a sleeping baby\n\n")
             @@prompt.say("'Please', says the woman. 'Take the baby and this note. The balance of the world is in your hands.'\nAs you take the baby and note, the woman reaches back out and begs for you to end her suffering\n\n")
@@ -491,7 +531,7 @@ class Cli
 
             self.calculate_karma(karma, @@title)
             system('clear')
-            @@prompt.say("Congratulations! You've attained the title, #{@@title}. Thank you for playing!")
+            @@prompt.say("Congratulations! You've attained the title: #{@@title}. Thank you for playing!")
 
             Game.create(user_id: @@user.id,planet_id: @planet_id,karma: @@title)
             sleep(5)
